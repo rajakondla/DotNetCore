@@ -1,0 +1,22 @@
+﻿@using Microsoft.Extensions.Options
+@using MyPracticeWebSite.Services
+@model Shared.Models.ConferenceModel
+@* without using controller if we have to access data directly in the view use inject directive *@
+@inject IOptions<MyPracticeWebsiteOptions> options
+<tr>
+    <td>@Model.Name</td>
+    <td>@Model.Location</td>
+    <td>@Model.Start.ToString("ddd d MMM")</td>
+    <td>@Model.AttendeeTotal</td>
+    @if (Model.AttendeeTotal > options.Value.ThresHold)
+    {
+        <td><strong>@Model.AttendeeTotal</strong></td>
+    }
+    else
+    {
+        <td>@Model.AttendeeTotal</td>
+    }
+    <td>
+        <a asp-controller="Proposal" asp-action="Index" asp-route-conferenceId="@Model.Id">Proposals</a>
+    </td>
+</tr>

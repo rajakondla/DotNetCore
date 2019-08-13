@@ -1,0 +1,34 @@
+﻿1) In classic asp.net, System.Web assembly takes care of starting the application. Any custom logic written while starting the app will be written in global.asax file.
+
+2) But in asp.net core, we have to define how to start the application using Startup.cs file. This Startup.cs file will be called from Program.cs file which is the entry point of the application. When runtime runs the application, it looks for Main mathod and excutes.
+
+3) The application starts initially as command line application. This main method will configure the dotnet core and starts it.
+
+public static void Main(string[] args)
+        {
+            CreateWebHostBuilder(args).Build().Run();
+        }
+
+ public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
+
+4) The above method CreateWebHostBuilder will be called in Main method, then the application will be converted from command line to asp dotnet core application.
+
+steps in CreateDefaultBuilder
+
+1) Create WebHostBuilder object
+2) Call Kestrel. Kestrel is a internal web server for hosting your application. Its embeded in your application.
+3) Call IIS integration, its a external web serever for your application. All the requests come will be proxied from external web server to internal web server and vice versa.
+4) Content root which is Directory.GetCurrentDirectory()
+5) ConfigureApp which load appSettings.json by default
+6) ConfigureLogging sets all logging to console and debug window by default for entire application.
+7) UseDefaultServiceProvider means it instructs asp.net core to use inbuilt dependency container
+8) ConfigureServices allow use to add types to the above dependency injection container. By default, KestralServerOptions types configured for kestrel.
+
+Startup.cs file
+
+Runtime calls below two methods from Startup class
+
+1) ConfigureService used to configure dependency injection. DI in asp.net is optional, but in asp.net core it is part of it.
+IOC container. All types (services) will register in the container. Any types asking to IOC, IOC will create a new instance and supply it. Life time of the object we be decided in IOC. 

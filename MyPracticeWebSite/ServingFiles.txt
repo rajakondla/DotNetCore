@@ -1,0 +1,10 @@
+Classic asp.net
+
+1) Files are served from project root folder. Place the file in root folder and served when requested by browser
+2) The sensitive files like web.config and global.asax has to blocked by special routing rules.
+3) The above files like web.config and global.asax has to be blacklisted
+
+ASP.Net core
+
+1) In asp.net core nothing is accessible by default to the browser expect when it is placed in wwwroot folder. All css, javascript, images should be there in wwwroot folder to serve to the browser.
+

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- environment, asp-href-include, asp-href-exclude example tag helpers 
+        imported from Microsoft.AspNetCore.MVC.TagHelpers-->
+    <environment include="Development">
+        <link rel="stylesheet" asp-href-include="css/*" asp-href-exclude="css/all.min.css">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" asp-href-include="css/all.min.css" />
+    </environment>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <!-- asp-append-version tag helper caches the image. It calculates version hash based on the 
+                    content of the image and appends to the name of the image when browser requests the image.
+                    This allows the change my image when we change the image and sends to the browser immediately-->
+                <img asp-append-version="true" alt="Logo" src="~/img/IMG-20171203-WA0012.jpg" style="max-width:100%" />
+            </div>
+            <div class="col-md-10 titlecol">
+                <span class="title">@ViewBag.Title</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>

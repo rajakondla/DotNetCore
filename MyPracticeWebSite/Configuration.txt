@@ -1,0 +1,11 @@
+﻿Classic Asp.net
+
+1) Key value pair
+2) Use Web.config or other xml files
+3) no direct dependency injection support
+
+Asp.net core
+
+1) Key value pair
+2) Use In-memory, json, environment variables 
+3) Optimized for dependency injection

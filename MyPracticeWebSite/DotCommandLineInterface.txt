@@ -1,0 +1,32 @@
+﻿In classic asp.net application, IIS will start the application . Windows OS load the CLR for IIS.
+
+In dotnet core, dotnet CLI (command line interface) will start the application. To run it, dotnet CLI needs IL (.dll or exe) to run the application. dotnet CLI will load CoreCLR for us. So, instead of IIS executing the application, dotnet CLI has its own executable process to run the application. dotnet CLI will look for the main method and runs the application. So seperate native app running the application so there is no dependency on windows OS, dotnet core become cross platform. dotnet CLI has different versions for windows, linux, Mac OS.
+
+dotnet CLI is not only for running the application, but also for restoring the Nuget packages that are specified in .csproj file.
+
+dotnet run restore command is a SDK.
+
+When we run the application from VS, VS uses dotnet run cmd. dotnet run will start the dotnet runtime. 
+
+Different commands
+1) dotnet run will build and run tha application. used by VS.
+2) dotnet run restore is a SDK. used by VS for restoring the packages specified in .csproj
+3) dotnet build
+4) dotnet publish
+
+FCL contains some of the classes that are tied to windows. Eg: System.Web tied to IIS and IIS depends on Windows.
+
+System.Web is a pipeline for request creation and resuests processing. It contains HttpContext. Used in classic asp.net, but not in dotnet core. When request come from IIS, IIS sends the request to System.Web. System.Web creates the HttpContext for the request. classic asp.net web applications depends on System.Web http-protocol working.
+
+CLR jobs
+1) Garbage collection
+2) Type safety
+3) Thread management
+4) Exception handling
+5) Interop
+6) Security
+7) convertion of IL to native code (important)
+
+CSC compiler will come till c# 5.0 version. from C# 6, it is replaced with roslyn compiler. Eg: csc program.cs will run till c# 5.0.
+
+https://packagesearch.azurewebsites.net

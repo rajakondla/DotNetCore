@@ -1,0 +1,21 @@
+﻿Reintroduce of csproj or vbproj in asp.net core
+
+The previous version of asp.net core have project.json/xproj file which is replaced by csproj file. The reason for replacing project.json is not compatible with MSBuild. MSBuild is a build platform used in many DevOps environments
+
+Previously in asp.net, to edit the csproj file we have to unload the project and edit it, but now it is not required.
+
+asp.net core csproj file structure also very different. Eg: This version of csproj does not contain any folder/file reference because of this you can simply add a file in project folder and that effects in the solution explorer. This will save lot of time when you working in source control system resolving conflicts with other team.
+
+<TargetFramework>netcoreapp2.2</TargetFramework>. The value inside node we call it as moniker.
+
+asp.net core application can be run not only in dotnet core framework, but also in regular dotnet framework starting from 4.5.1 version
+
+
+  <PackageReference Include="Microsoft.AspNetCore.App" />. When we add any package reference to the project from Nuget or any other, a entry is added as package reference. Unlike remaining package reference, this Microsoft.AspNetCore.App does not have any version it will be detected automatically.
+  Refer to PackageRefBeforeCore2_0. All those package reference is replaced by one Microsoft.AspNetCore.App entry.
+
+  The different small packages for each feature like PackageRefBeforeCore2_0 is a good solution, but if one version update will break the code. So all this package included and made as Microsoft.AspNetCore.App also called as Meta package. Meta package include all packages of asp.net core, entity framework core, third party dependencies used by asp.net core.
+
+  We do not have to deploy Meta package in machine as this is huge, it already installed by a new dotnet core runtime store.
+
+  Task runner like Gupl, Grunt, Webpack is used for bundling, transpiling, image compressing, linting, generate documentation

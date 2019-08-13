@@ -1,0 +1,16 @@
+﻿1) Request comes from browser to IIS
+2) IIS then invokes dotnet runtime
+3) dotnet runtime loads the CLR and then looks for the entry point in application, which is main method.
+4) main method is executed starting internal web server of your application.
+5) Now the request routed from IIS to internal web server
+6) Now request flows through pipeline middlewares mentioned in startup class
+7) Once request processed, the response goes back again from internal web server to IIS.
+
+In asp.net, applications depend on System.Web which is a huge assembly, memory consuming and performance issue. So, using pipeline we inject middle wear what we need, and those comes from different assemblies.
+
+System.Web depend on IIS, and IIS depend on Windows. So this is the reason asp.net does not run on remaining OS.
+
+Kestrel is a light weight web server, built for cross platform, and have first class support for asp.net core. It does not have all feature like external web server except to process http request, but it is lightning fast. So we need external web server in deployment.
+
+Asp.net core pipeline can be seen as next version of OWIN/katana
+

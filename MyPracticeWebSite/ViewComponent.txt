@@ -1,0 +1,9 @@
+﻿If we want to have a resuable component, then we should use ViewComponent introduced in Asp.net core
+
+1) We can use partial view for this. But partial view should not have any business logic involved
+2) We can write business logic in controller, but it is not reusable
+3) We can use child action method, but child action method involves in complete lifecycle of controller which leads to performance issue. Each child action method has its corresponding view
+
+View components is like a patial view with its own mini lightweight controller. Can be used if complex business logic or calculation is involved. Can be rendered using razor syntax.
+
+MVC expects view components class in ViewComponent folder, and its view in Component/{component name}/ folder any view name.

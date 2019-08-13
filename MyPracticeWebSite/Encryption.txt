@@ -1,0 +1,12 @@
+﻿Encryption is of two types
+1) Symmetrical Encryption
+2) Asymmetrical Encryption
+
+1) Symmetrical Encryption contains only one key for encryption and decryption
+2) Asymmetircal Encryption contains two keys. Public key and private key which is used by SSL.
+
+Symmetrical encryption is used by Asp.net for data encryption.
+
+Hashing key is generated with encrypted data before sending the encrypted data. Hashing is a type of encryption that cannot be decrypted by any key not even the creator. Hasing is used for anti tampering. Both Hash and encrypted data send to the client. Upon return the encrypted data is hashed again and compared with previously hashed data.
+
+Hashing is the frequently used technique for storing password in database.

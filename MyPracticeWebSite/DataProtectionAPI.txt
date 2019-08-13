@@ -1,0 +1,11 @@
+﻿Traditional Asp.net uses Machine.config file for getting the key for encryption. This key server specific and there is no key rotation. Even if we modify the key, we have to modify all the server and current user httpCookie will not work.
+
+For load balancer, if the request goes to another server this will create a problem as the key is not available. So we move this key to web.config, but we we push the code to SVN, everyone can see the key.
+
+So we use DPA (both dotnet core and asp.net). This is a replacement for machine key. Keys are protected by native OS if such a mechanism is available. Windows has the in-build DPA. If any other native OS is not having this mechanism, keys can be protected using a certificate stored at the OS level.
+
+With DPA, there is no one key for all application. WE can have key per application, or key for specific time period. General expire date of the DPA key is 90 days. Even for current use login, httpcookie is still decrypted as DPA maintains old kets too. Once it is decrypted with old key, again it is encrypted with new key.
+
+For generating httpcookie middleware dotnet core use DPA. In AntiForgeryToken too DPA is used.
+
+We can encrypt the query string using DPA.

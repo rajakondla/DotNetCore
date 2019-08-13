@@ -1,0 +1,8 @@
+﻿launchSettings.json file containts profiles and iissettings.
+
+1) IIS Express, will be used by IIS express (external web server) to run the application
+2) MyPracticeWebSite used by kestrel (internnal web server) to run the application in command line
+
+CDN - Content Delivery Network
+
+From dotnet core 2.1, microsoft encourages developers to download dotnet specific packages from Nuget, no javascript and css from Nuget. Either use CDN (for centralized location of javascript or css) or NPM (for local or reside in your machine) for javascript and css.

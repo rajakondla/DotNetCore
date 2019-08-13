@@ -1,0 +1,30 @@
+﻿There are two types of deployment done with dotnet core
+1) FDD - Framework dependent deployment
+2) SCD - Self contained deployment
+
+FDD
+1) dotnet core framework should be pre-installed on the target machine. Same as classic asp.net.
+2) Our App size will be less as we are expecting dotnet core is pre-installed in the target machine. So, need not include coreFx libraries
+3) Can be a disadvantage when the target machine have different apps running on different framework versions. We have to check, will the different versions play well together and will the latest version framework is backward compatible.
+
+SCD
+1) dotnet core framework will be deployed along with our app when publishing the app.
+2) Our app will have full control about the framework version we use.
+3) 100% certanity the app will work as we are deploying our app with dotnet core. So we need not have to check the pre-requisite.
+4) Side-by-side execution without any problem.
+5) Disadvantage is we have to configure the target machine for such deployment
+6) Disadvantage is the app size is larger as we are including framework
+7) Since asp.net core is a cross-platform, we have to provide RID (Runtime Identifier). RID is a specifier on which platform your going to deploy your application. Depending on RID mentioned, the libraries will be generated.
+8) If RID node in present in .csproj file, our application will be automatically treated as SCD deployment.
+
+When using SCD, specifiying the metapackage in .csproj file is a disadvantage as the all the dlls in the metapackage will be moved along with application dlls. We will only use few dlls in our project, so specify which dlls we use in the .csproj. In this way the size of the deployment folder will become less compared to moving with metapackage.
+
+With SCD, we will get .exe file to start out application not like FCD. We can run the exe and start out application. As we have internal web server in our app, we can run the application.
+
+web.config file will be created in publish folder. It contains aspNetCore handler. aspNetCore will be specified with processPath="dotnet" runtime for FCD and processPath="{}.exe" for SCD.
+
+web.config file is used by IIS only. When we deploy the application in Nginex or any production ready web server web.config file is not used by them.
+
+we need AspNetCoreModule to be installed in target machine for both SCD and FCD. AspNetCoreModule is a command line application that process the request.  IIS needs a process that takes the request and process it and sends the request back to IIS. IIS does it using AspNetCoreModule. AspNetCoreModule does restart of the application, manage the application, concurrent request handling etc. So IIS treats our application as any other application.
+
+In traditional asp.net framework, we have System.Web to do the AspNetCoreModule work.

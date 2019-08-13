@@ -1,13 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  <RuntimeIdentifiers>win10-x64;ubuntu.14.04-x64</RuntimeIdentifiers>
+  <UserSecretsId>dc1141e4-d237-4a94-b1cc-ad3c08fb351d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.9.406" />
+    <PackageReference Include="BundlerMinifier.Core" Version="2.9.406" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="2.0.0" />
+    <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\API\API.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

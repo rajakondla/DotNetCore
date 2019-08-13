@@ -1,0 +1,18 @@
+﻿Runtime store is like a GAC. classic asp.net looks for dotnet framework assemblies like System in GAC location. dotnet runtime looks for runtime store location.
+
+Runtime store is a location where nuget package that we add will be stored.
+
+location: C:\Program Files\dotnet\sdk\NuGetFallbackFolder 
+When we install dotnet core framework, the metapackage Microsoft.AspNetCore.App (is a huge library) is already installed.
+
+We we run the dll for first time, all the dll will be JIT compiled and chached. So first time running application takes time.
+
+All the runtime store libraries are pre-JIT compiled by NGen (Native Image Generation tool) when we install dotnet core framework. NGen is a tool for pre_JIT compiling. NGen will convert our dll to binary codes or native code and chached. So these dlls need not to be JIT compiled. Only the app specific dlls are JIT compiled. So the application execution is fast.
+
+The JIT compiler produces highly optimized native code based on the execution environment data. The generated native code is stored in the application domain, and is used during consequent calls to this method.
+
+We can add our own nuget packages to the runtime store.
+
+1) add dll to the nuget packages using dotnet sdk.
+2) add the list of packages in the manifest block of .csproj file
+3) The packages that you specify in the manifest will not be included in the publish folder. dotnet runtime expects that to be already installed in the target machine.

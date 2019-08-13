@@ -1,0 +1,16 @@
+﻿WebAPI and ASP.Net MVC comes from ASP.Net core MVC.
+
+1) Controller should inherit from ControllerBase. ControllerBase is a base class to controller. Controller class used for ASP.Net core mvc and ControllerBase class used for WebAPI. ControllerBase does not contain functionality for Views which we do not require in WebAPI.
+2) APIController attribure is optional to use, but better to use it as we will have features like
+
+	a) Automatic model validation - The model that we require for a action method will be validated automatically and raise bad request status code if model is invalid. We do not have to write explicit code for validation
+	b) Binding source inference - We do not have to explicit tell the contoller action method where to look up for data. Eg: we need not have to mention like [FromBody], [FromForm], [FromQuery], [FromRoute] etc
+
+But, we have to use attribute routing if we use APIController attribute. Table configuration attribute is not allowed.
+
+ [Route("v1/[controller]")]
+ Here in routing, action method is not mentioned. REST service should respond to HTTP verbs. If we mention action method, the calling party should know the implementation of WebAPI which SOAP service does. In SOAP service we are expecting the calling party to know the implementation of service.
+
+ In case of update/create service method, if we return a view model from the action method, if the action is successful we will return view model along with status code 200. But when it fails, it return 500 internal server error, which we do not know what happened. So use CreatedAtRoute method which return 201 status as created and you can mention the url where the created information is available. CreatedAtRoute execute the action method and return the result and places a location header with value URI. This is called level 3 matuarity model hypermedia controls.
+
+Any verions of WebAPI support content negotiation. WebAPI sends the content depending on the clinet request (uses content-type).

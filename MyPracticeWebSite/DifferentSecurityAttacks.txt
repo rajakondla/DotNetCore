@@ -1,0 +1,33 @@
+﻿1) Man in the middle attack
+Sol: use Https and HSTS
+
+2) SQL injection attack (happens irrespective of http or https as customer can also do it)
+Sol: use data validation, least credentials to the application to use database, use ORM but still check the data for store procedure using in ORM.
+
+3) CSRF (Cross Site Request Forgery)
+When user logs in with http and user gets the cookie for subsequest log in check. At that time if user clicks on some hijacking links, tha hijaking link can send a forgery request to the server with same controls that the server expects with value filled by hijacker along with the cookie. The server does the operation as the cookie is present.
+Sol: Use form tag in asp.net core and use ValidateAntiForgeryToken attribute for every corresponding action method. Using form tag, the asp.net core sends a hidden encrypted value matching with the cookie. If the value does not match with cookie or the hidden fields is not there asp.net core throws bad request error.
+
+4) XSS (Cross Site Scripting)
+Placing a javascript into a webpage. like <script>alert('Hi!')</script>. This will execute be executed and displayed in browser. 
+Sol: use HTML encoding. MVC encodes everything that is a variable. If something not under MVC like accesing data from request object, use HTML encoder helper method to encode the text.
+
+6) Browser runs the javascript where ever comes in
+Sol: Use content security policy (CSP). Adding a header Content-Security-Policy:script-src style-src img-src 'self' will not allow the browser to execute inline javascript and also it will restrict the browser to load the sources from single domain. To apply all the resource use default-src.
+
+7) Open Redirection Attack
+http://bank.com/Account/Logon?returnUrl=http://bank.net/Account/Logon
+When user click on above link. User logs in bank.com and redirects to bank.net which ask for credentials. This time bank.net has your username and password.
+Sol: Check for Url.IsLocalUrl(returlUrl). This will only check the domain not entire url.
+
+8) Click Jacking
+After user logs into bank.com, user browser having a HttpCookie. So now on user browser a pop appears with click button of 100$ winning. When user clicks on it, a hidden iframe which is related to this button will submit to the server along with the HttpCookie.
+Sol: Use header X-Frame-Options:Deny (prevents the browser to display page in iFrame) or X-Frame-Options:SAMEORIGIN or X-Frame-Options:ALLOW-From https://example.com (allow from specific domain). In dotnet core we use UseXfo middleware to add this header to the response.
+
+9) Browser will automatically stop the CORS (Cross Origin Resource Sharing) by default. Same Origin Policy is specific to the http request originated from javascript.
+Eg: if the site having url http://localhost:5001/test.html send a ajax request to http://localhost:8080/api/conference/getconferencebyid/1. The response will be stopped by browser as both the url are from different domain (Even if the ports are different, the browser will treat the urls as a seperate domain). So in order to allow the response, we should add header
+Access-Control-Allow-Origin:* to the response of the api. In dotnet core 
+app.useCors(c=>c.AllowAnyOrigin())
+
+If Request Origin:http://bank.com
+Response should contain Access-Control-Allow-Origin:http://bank.com or Access-Control-Allow-Origin:*

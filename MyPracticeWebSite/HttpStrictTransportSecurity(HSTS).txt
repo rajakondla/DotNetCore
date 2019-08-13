@@ -1,0 +1,11 @@
+﻿1) When user requests for the web page first time, he can go with http or https. If he goes with https the connection is secured and the man in the middle cannot sneak in the middle. But if he goes with http then the request is in-secure, we can add middle ware in asp.net core and gives a user https response and make the connection secure even the request comes in http. Then subsequent request is secured. For this the middle ware that we use is NWebsec.AspNetCore.Middleware Nuget package.
+
+using HSTS, the server will add below header to the response. The browser will use this header for one year for that site and makes the request https.
+Strict-Transport-Security: max-age=63072000;
+
+
+This resolves half the issue, but what about the first request?
+
+Eg: When user request for bank.com over http using free wifi and router. Man in the middle configured the wifi and sends his  bank.com page to the user. User thinks its came from actual server and enters his credentials and submits the request. Man in the middle receives the request and extract the credentials and he can do anything.
+
+So inorder to make the first request also secure or https, we have to register the domain in https://hstspreload.org/ which maintain all the sites that needs to be https preloaded. When browser get updated, browser will get this list of sites from https://hstspreload.org/ and maintains in local memory. So when user makes the http request, browser makes sure it is https request.
