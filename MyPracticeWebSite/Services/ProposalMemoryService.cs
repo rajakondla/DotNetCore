@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.DataProtection;
 using Shared.Models;
 
 namespace MyPracticeWebSite.Services
@@ -9,12 +10,15 @@ namespace MyPracticeWebSite.Services
     public class ProposalMemoryService: IProposalService
     {
         private readonly List<ProposalModel> proposals = new List<ProposalModel>();
+        private readonly IDataProtector _dataProtector;
 
-        public ProposalMemoryService()
+        public ProposalMemoryService(IDataProtectionProvider dataProtProvider,PurposeKeys purposeKeys)
         {
+            _dataProtector = dataProtProvider.CreateProtector(purposeKeys.ProposalIdKey);
             proposals.Add(new ProposalModel
             {
                 Id = 1,
+               EncryptedId=_dataProtector.Protect("1"),
                 ConferenceId = 1,
                 Speaker = "Roland Guijt",
                 Title = "Understanding ASP.NET Core Security"
@@ -22,6 +26,7 @@ namespace MyPracticeWebSite.Services
             proposals.Add(new ProposalModel
             {
                 Id = 2,
+                EncryptedId = _dataProtector.Protect("2"),
                 ConferenceId = 2,
                 Speaker = "John Reynolds",
                 Title = "Starting Your Developer Career"
@@ -29,6 +34,7 @@ namespace MyPracticeWebSite.Services
             proposals.Add(new ProposalModel
             {
                 Id = 3,
+                EncryptedId = _dataProtector.Protect("3"),
                 ConferenceId = 2,
                 Speaker = "Stan Lipens",
                 Title = "ASP.NET Core TagHelpers"

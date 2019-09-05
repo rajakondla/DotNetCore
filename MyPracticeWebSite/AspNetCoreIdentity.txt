@@ -1,0 +1,7 @@
+﻿Asp.Net core identity is a open source framework for user authentication also known as membership system.
+
+Asp.Net core identity is a claim-based authentication. claims are like key-value pair.
+
+User is asp.net core is a instance of claims principal class.
+
+Asp.Net core can be configured with classes IdentityUser and IdentityRole

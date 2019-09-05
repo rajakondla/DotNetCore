@@ -52,7 +52,12 @@ namespace MyPracticeWebSite.Services
             return result;
         }
 
-        public async Task<StatisticsModel> GetStatistics()
+        public async Task<ConferenceModel> GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+            public async Task<StatisticsModel> GetStatistics()
         {
             var result = new StatisticsModel();
             var response = await _httpClient.GetAsync($"/v1/Statistics");

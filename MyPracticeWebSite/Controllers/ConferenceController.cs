@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using MyPracticeWebSite.Services;
 using Shared.Models;
 
 namespace MyPracticeWebSite.Controllers
 {
+    [Authorize]
     public class ConferenceController : Controller
     {
         public readonly IConferenceService _service;
@@ -38,5 +41,7 @@ namespace MyPracticeWebSite.Controllers
 
             return RedirectToAction("Index");
         }
+
+
     }
 }

@@ -2,31 +2,38 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models;
 using MyPracticeWebSite.Services;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyPracticeWebSite.Controllers
 {
+    [Authorize]
     public class ProposalController: Controller
     {
         private readonly IConferenceService conferenceService;
         private readonly IProposalService proposalService;
+        private readonly IDataProtector _dataProtector;
 
-        public ProposalController(IConferenceService conferenceService, IProposalService proposalService)
+        public ProposalController(IConferenceService conferenceService, IProposalService proposalService,IDataProtectionProvider dataProtProvider, PurposeKeys purposeKeys)
         {
+            _dataProtector = dataProtProvider.CreateProtector(purposeKeys.ConferenceIdKey);
             this.conferenceService = conferenceService;
             this.proposalService = proposalService;
         }
 
-        public async Task<IActionResult> Index(int conferenceId)
+        public async Task<IActionResult> Index(string id)
         {
+            int conferenceId = int.Parse(_dataProtector.Unprotect(id));
             var conference = await conferenceService.GetById(conferenceId);      
             ViewBag.Title = $"Proposals For Conference {conference.Name} {conference.Location}";
-            ViewBag.ConferenceId = conferenceId;
+            ViewBag.ConferenceId = id;
 
             return View(await proposalService.GetAll(conferenceId));
         }
 
-        public IActionResult Add(int conferenceId)
+        public IActionResult Add(string id)
         {
+            int conferenceId = int.Parse(_dataProtector.Unprotect(id));
             ViewBag.Title = "Add Proposal";
             return View(new ProposalModel {ConferenceId = conferenceId});
         }

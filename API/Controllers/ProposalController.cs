@@ -7,7 +7,8 @@ using System;
 namespace API.Controllers
 {
     [Route("v1/[controller]")]
-    public class ProposalController: Controller
+    [ApiController]
+    public class ProposalController: ControllerBase
     {
         private readonly IConferenceRepo conferenceRepo;
         private readonly IProposalRepo proposalRepo;

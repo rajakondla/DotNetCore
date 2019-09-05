@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using MyPracticeWebSite.IdentityUserModel
+@inject SignInManager<MyPracticeUserIdentity> signInManager;
+@inject UserManager<MyPracticeUserIdentity> userManager;
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -8,7 +12,9 @@
     <!-- environment, asp-href-include, asp-href-exclude example tag helpers 
         imported from Microsoft.AspNetCore.MVC.TagHelpers-->
     <environment include="Development">
-        <link rel="stylesheet" asp-href-include="css/*" asp-href-exclude="css/all.min.css">
+        <link rel="stylesheet" asp-href-include="css/*" asp-href-exclude="css/all.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" asp-href-include="css/all.min.css" />
@@ -25,6 +31,19 @@
             </div>
             <div class="col-md-10 titlecol">
                 <span class="title">@ViewBag.Title</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @if (!signInManager.IsSignedIn(User))
+                {
+                    <a asp-action="Register" asp-controller="Auth" class="btn btn-primary">Register</a>
+                }
+                else
+                {
+                    <span>@userManager.GetUserName(User)</span>
+                    <a asp-action="Logoff" asp-controller="Auth" class="btn btn-primary">Logoff</a>
+                }
             </div>
         </div>
         <div class="row">

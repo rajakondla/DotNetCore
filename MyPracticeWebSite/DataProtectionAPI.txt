@@ -1,11 +1,25 @@
-﻿Traditional Asp.net uses Machine.config file for getting the key for encryption. This key server specific and there is no key rotation. Even if we modify the key, we have to modify all the server and current user httpCookie will not work.
+﻿Traditional Asp.net uses Machine.config file for getting the key for encryption. This key is server specific and there is no key rotation. Even if we modify the key, we have to modify all the server and current user httpCookie will not work.
 
 For load balancer, if the request goes to another server this will create a problem as the key is not available. So we move this key to web.config, but we we push the code to SVN, everyone can see the key.
 
 So we use DPA (both dotnet core and asp.net). This is a replacement for machine key. Keys are protected by native OS if such a mechanism is available. Windows has the in-build DPA. If any other native OS is not having this mechanism, keys can be protected using a certificate stored at the OS level.
 
-With DPA, there is no one key for all application. WE can have key per application, or key for specific time period. General expire date of the DPA key is 90 days. Even for current use login, httpcookie is still decrypted as DPA maintains old kets too. Once it is decrypted with old key, again it is encrypted with new key.
+With DPA, there is no one key for all application. WE can have key per application, or key for specific time period. General expire date of the DPA key is 90 days. Even for current user login, httpcookie is still decrypted as DPA maintains old keys too. Once it is decrypted with old key, again it is encrypted with new key.
 
-For generating httpcookie middleware dotnet core use DPA. In AntiForgeryToken too DPA is used.
+For generating httpcookie middleware, dotnet core use DPA. In AntiForgeryToken too DPA is used.
 
 We can encrypt the query string using DPA.
+
+How DP API works?
+1) from IDataProtectionProvider, we create a object of IDataProtector with a method CreateProtector("Purpose String"). Purpose String is used as user key (Prefered key format is namespacename.classname). From IDataProtector object we call the Protect("string to protect"). 
+2) We can have multiple purpose string keys. To create them we use CreateProtector("Purpose String 1","Purpose string 2").
+3) In the back ground, the purpose string is mathmatically joined with the master key and creates the used key (Master key + purpose string = used key).
+4) Master key is per application. It is a base purpose string per application.
+5) For example. with purpose strings Demo.WebAPI, v1 [CreateProtector("Demo.WebAPI","v1")] + Master key, some used keys are created. Now the purpose strings changed to Demo.WebAPI, v2. So now the used keys that are created with first purpose strings will be totally recreated and isolated to second purpose strings. But, the used keys for first purpose strings will still be maintained.
+6) This master keys is isolated by user profile. We can multiple user profiles in an OS.
+
+Where does this master keys stored.
+1) If user profile is available, master key stored in User Profile/Local App Data/ folder. If it is Windows OS, the OS will use DPAPI to encrypt the master key in the OS level.
+2) If no user profile is available and IIS used application, the master key stored in registry, and only work process account can access the keys.
+3) In Azure, the master keys stored in Data Protection Keys folder. Azure will make sure synchronizing the master keys to all the hosted machines. Keys will exist unencrypted in that folder.
+4) Other platfrom , we have to implement the master key storage mechanism.
