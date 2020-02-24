@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPracticeWebSite", "MyPracticeWebSite\MyPracticeWebSite.csproj", "{4B0D851C-113C-4E58-95A0-F913040B85D9}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{9ED33ADA-75F8-4EC0-95F7-8CB9C45D802C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetSecurity", "AspNetSecurity\AspNetSecurity.csproj", "{A448DE9D-991E-4F1C-9044-40B6BF9039B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetSecurity", "AspNetSecurity\AspNetSecurity.csproj", "{A448DE9D-991E-4F1C-9044-40B6BF9039B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{E0ED0F13-3E28-4C8D-927D-AED2775D8663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A448DE9D-991E-4F1C-9044-40B6BF9039B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A448DE9D-991E-4F1C-9044-40B6BF9039B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A448DE9D-991E-4F1C-9044-40B6BF9039B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0ED0F13-3E28-4C8D-927D-AED2775D8663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0ED0F13-3E28-4C8D-927D-AED2775D8663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0ED0F13-3E28-4C8D-927D-AED2775D8663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0ED0F13-3E28-4C8D-927D-AED2775D8663}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
